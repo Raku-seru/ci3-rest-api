@@ -14,6 +14,19 @@ class Mahasiswa_model extends CI_Model
     public function deleteMahasiswa($id)
     {
         $this->db->delete('mahasiswa', ['id' => $id]);
+        $temp = $this->db->affected_rows();
+        return $temp;
+    }
+
+    public function createMahasiswa($data)
+    {
+        $this->db->insert('mahasiswa', $data);
+        return $this->db->affected_rows();
+    }
+
+    public function updateMahasiswa($data, $id)
+    {
+        $this->db->update('mahasiswa', $data, ['id' => $id]);
         return $this->db->affected_rows();
     }
 }

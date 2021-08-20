@@ -45,9 +45,8 @@ class Mahasiswa extends RestController
             if ($this->mhs->deleteMahasiswa($id) > 0) {
                 $this->response([
                     'status' => true,
-                    'id' => $id,
                     'message' => 'ID has been deleted'
-                ], 204);
+                ], 200);
             } else {
                 $this->response([
                     'status' => false,
@@ -57,4 +56,48 @@ class Mahasiswa extends RestController
         }
     }
 
+    public function index_post()
+    {
+        $data = [
+            'nrp' => $this->post('nrp'),
+            'nama' => $this->post('nama'),
+            'email' => $this->post('email'),
+            'jurusan' => $this->post('jurusan')
+        ];
+
+        if($this->mhs->createMahasiswa($data) > 0) {
+            $this->response([
+                'status' => true,
+                'message' => 'ID has been created'
+            ], 201);
+        } else {
+            $this->response([
+                'status' => false,
+                'message' => 'failed to create new data'
+            ], 400);
+        }
+    }
+
+    public function index_put()
+    {
+        $id = $this->put('id');
+        $data = [
+            'nrp' => $this->put('nrp'),
+            'nama' => $this->put('nama'),
+            'email' => $this->put('email'),
+            'jurusan' => $this->put('jurusan')
+        ];
+
+        if($this->mhs->updateMahasiswa($data, $id) > 0) {
+            $this->response([
+                'status' => true,
+                'message' => 'ID has been modified'
+            ], 200);
+        } else {
+            $this->response([
+                'status' => false,
+                'message' => 'failed to modify data'
+            ], 400);
+        }
+    }
 }
